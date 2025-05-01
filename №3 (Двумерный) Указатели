@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+    srand(time(0));
+    int n,m;
+    cout<<"Enter the number of rows: "; cin>>n;
+    cout<<"Enter the number of columns: "; cin>>m;
+    int** arr{new int*[n]{}};
+    for(unsigned i{}; i<n; i++)
+        {
+            arr[i]= new int[m]{};
+        }
+    for(unsigned i{}; i<n; i++)
+        {
+            for(unsigned j{}; j<m; j++)
+                {
+                    arr[i][j]= rand()%10;
+                    cout<<arr[i][j]<<" ";
+                }
+                cout<<endl;
+        }
+    for(unsigned i{}; i<n; i++)
+        delete[] arr[i];
+    delete[] arr;
+    return 0;
+}
