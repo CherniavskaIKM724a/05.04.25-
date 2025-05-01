@@ -1,0 +1,12 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int a; int *p{&a};
+    cout<<"Enter a number: "; cin>>a;
+    *p = ++a;
+    cout<<"New number: "<< a;
+    return 0;
+}
