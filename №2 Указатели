@@ -1,0 +1,21 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+    srand(time(0));
+    int n; double sum{};
+    cout<<"Enter the number of array elements: "; cin>>n;
+    int *numbers{new int[n]};
+    for (unsigned i{}; i<n; i++)
+        {
+            *(numbers+i) = rand()%16;
+            sum += *(numbers+i);
+            cout<<*(numbers+i)<< " ";
+        }
+    cout<<endl<<"Arithmetic mean of array elements = "<< sum << "/" << n << " = "<< sum/n;
+    delete[] numbers;
+    return 0;
+}
