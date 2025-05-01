@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+    srand(time(0));
+    int n,m; double sum{};
+    cout<<"Enter the number of rows: "; cin>>n;
+    cout<<"Enter the number of columns: "; cin>>m;
+    //выделяем память
+    int** numbers{new int*[n]{}};   //[nullptr, nullptr, nullptr, ...] и таких n
+    for (unsigned i{}; i<n; i++)
+        {
+            numbers[i] = new int[m]{};   //[[0,0,...],[0,0,...], ...]
+        }
+    //выделили
+    for(unsigned i{}; i<n; i++)
+        {
+            for(unsigned j{}; j<m; j++)
+                {
+                    numbers[i][j] = rand()%10;
+                    sum += numbers[i][j];
+                    cout<<numbers[i][j]<< " ";
+                }
+            cout<<endl;
+        }
+    cout<<endl<<"Arithmetic mean of array elements = "<< sum << "/" << n*m << " = "<< sum/(n*m);
+    for (unsigned i{}; i<n; i++)
+        {
+            delete[] numbers[i];
+        }
+    delete[] numbers;
+    return 0;
+}
