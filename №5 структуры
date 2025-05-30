@@ -1,0 +1,84 @@
+#include <iostream>
+#include <string>
+#include <windows.h>
+using namespace std;
+
+struct Worker {
+    string name;
+    string position;
+    double salary;
+};
+
+int main() {
+    SetConsoleCP(1251);            // +кириллица
+    SetConsoleOutputCP(1251);
+    const int MAX_WORKERS = 100;    // Максимальное к-во работников
+    Worker staff[MAX_WORKERS];      // Массив работников
+    int count = 0;                  // Текущее к-во работников
+    int choice;
+
+    while (true) {
+        cout << "\nМеню:\n";
+        cout << "1. Добавить работника\n";
+        cout << "2. Изменить должность и зарплату\n";
+        cout << "3. Показать всех работников\n";
+        cout << "4. Выход\n";
+        cout << "Ваш выбор: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            // +
+            if (count >= MAX_WORKERS) {cout << "Штат заполнен!\n";continue;}
+            Worker w;
+            cout << "Введите имя работника: ";
+            cin.ignore();  //очищаем
+            getline(cin, w.name);
+            cout << "Введите должность: ";
+            getline(cin, w.position);
+            cout << "Введите зарплату: ";
+            cin >> w.salary;
+            staff[count] = w;
+            count++;
+            cout << "Работник добавлен!\n";
+        }
+        else if (choice == 2) {
+            // Изменения
+            if (count == 0) {
+                cout << "Список работников пуст!\n";
+                continue;
+            }
+            string name;
+            cout << "Введите имя работника: ";
+            cin.ignore();
+            getline(cin, name);
+            bool found = false;
+            for (int i = 0; i < count; i++) {
+                if (staff[i].name == name) {
+                    cout << "Текущая должность: " << staff[i].position << endl;
+                    cout << "Введите новую должность: ";
+                    getline(cin, staff[i].position);
+                    cout << "Текущая зарплата: " << staff[i].salary << endl;
+                    cout << "Введите новую зарплату: ";
+                    cin >> staff[i].salary;
+                    cout << "Информация обновлена!\n";
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {cout << "Работник не найден!\n";}
+        }
+        else if (choice == 3) {
+            // сводка
+            if (count == 0) {cout << "Список работников пуст!\n";continue;}
+            cout << "Список работников:\n";
+            for (int i = 0; i < count; i++) {
+                cout << "Имя: " << staff[i].name
+                     << ", Должность: " << staff[i].position
+                     << ", Зарплата: " << staff[i].salary << endl;
+            }
+        }
+        else if (choice == 4) {cout << "Выход.\n";break;}
+        else {cout << "Неверный выбор!\n";}
+    }
+    return 0;
+}
