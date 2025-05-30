@@ -1,0 +1,84 @@
+#include <iostream>
+#include <string>
+#include <windows.h>
+using namespace std;
+
+struct Tovar {
+    string name;
+    double price;
+    int quantity;
+};
+
+int main() {
+    SetConsoleCP(1251);            // +кириллица
+    SetConsoleOutputCP(1251);
+    int MAX_TOVARS = 100; // ассортимет
+    Tovar sklad[MAX_TOVARS]; // Массив товаров
+    int count = 0, count_sht=0;           // Текущее к-во товаров
+    int choice;
+    //менюшка
+    while (true) {
+        cout << "\nМеню:\n";
+        cout << "1. Добавить товар\n";
+        cout << "2. Изменить количество товара\n";
+        cout << "3. Показать все товары\n";
+        cout << "4. Выйти\n";
+        cout << "Ваш выбор: ";
+        cin >> choice;
+
+        if (choice == 1) {        //поставка
+            Tovar t;
+            cout << "Введите название товара: ";
+            cin.ignore(); // чистый ввод
+            getline(cin, t.name);  //чтобы не ыбло казусов с пробелами
+            cout << "Введите цену товара: ";
+            cin >> t.price;
+            cout << "Введите количество товара: ";
+            cin >> t.quantity;
+            sklad[count] = t; // Сохраняем товар в массив
+            count++;     // Увеличиваем количество товаров
+            cout << "Товар добавлен!\n";
+        }
+        else if (choice == 2) {
+            if (count == 0) {       // Изменение к-ва
+                cout << "Склад пуст!\n";
+                continue;
+            }
+            string name;
+            cout << "Введите название товара для изменения количества: ";
+            cin.ignore();
+            getline(cin, name);
+            bool found = false;
+            for (int i = 0; i < count; i++) {
+                if (sklad[i].name == name) { // ищем
+                    cout << "Текущее количество: " << sklad[i].quantity << endl;
+                    cout << "Введите новое количество: ";
+                    cin >> sklad[i].quantity;
+                    cout << "Количество обновлено!\n";
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {cout << "Товар не найден!\n";}
+        }
+        else if (choice == 3) {        // Вывод всех товаров
+            if (count == 0) {
+                cout << "Склад пуст.\n";
+                continue;
+            }
+            cout << "Список товаров:\n";
+            for (int i = 0; i < count; i++) {
+                cout << "Название: " << sklad[i].name << ", Цена: " << sklad[i].price << ", Количество: " << sklad[i].quantity << endl;
+            }
+        }
+        else if (choice == 4) {
+            // Выход
+            cout << "Выход из программы.\n";
+            break;
+        }
+        else {
+            cout << "Неверный выбор!\n";
+        }
+    }
+    return 0;
+}
