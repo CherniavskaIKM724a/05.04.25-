@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+#include <windows.h>
+using namespace std;
+
+struct Book {
+    string title;
+    string author;
+    int year;        // Год издания
+};
+
+int main() {
+    SetConsoleCP(1251);            // +кириллица
+    SetConsoleOutputCP(1251);
+    const int MAX_BOOKS = 100;   // Максимальное к-во книг
+    Book library[MAX_BOOKS];     // Массив книг
+    int count = 0;               // Текущее к-во книг
+
+    int choice;
+    while (true) {
+        cout << "\nМеню:\n";
+        cout << "1. Добавить книгу\n";
+        cout << "2. Поиск по автору\n";
+        cout << "3. Поиск по году издания\n";
+        cout << "4. Выход\n";
+        cout << "Ваш выбор: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            // +
+            if (count >= MAX_BOOKS) {cout << "Библиотека заполнена!\n";continue;}
+            Book b;
+            cout << "Введите название книги: ";
+            cin.ignore();   //чистый ввод
+            getline(cin, b.title);
+            cout << "Введите автора: ";
+            getline(cin, b.author);
+            cout << "Введите год издания: ";
+            cin >> b.year;
+            library[count] = b;
+            count++;
+            cout << "Книга добавлена!\n";
+        }
+        else if (choice == 2) {
+            // Поиск по автору
+            if (count == 0) {cout << "Библиотека пуста!\n";continue;}
+            string author;
+            cout << "Введите автора для поиска: ";
+            cin.ignore();
+            getline(cin, author);
+            bool found = false;
+            for (int i = 0; i < count; i++) {
+                if (library[i].author == author) {
+                    cout << "Название: " << library[i].title
+                         << ", Автор: " << library[i].author
+                         << ", Год: " << library[i].year << endl;
+                    found = true;
+                }
+            }
+            if (!found) {cout << "Книги этого автора не найдены!\n";}
+        }
+        else if (choice == 3) {
+            // Поиск книг по году
+            if (count == 0) {cout << "Библиотека пуста!\n";continue;}
+            int year;
+            cout << "Введите год издания для поиска: ";
+            cin >> year;
+            bool found = false;
+            for (int i = 0; i < count; i++) {
+                if (library[i].year == year) {
+                    cout << "Название: " << library[i].title
+                         << ", Автор: " << library[i].author
+                         << ", Год: " << library[i].year << endl;
+                    found = true;
+                }
+            }
+            if (!found) {cout << "Книги этого года не найдены!\n";}
+        }
+        else if (choice == 4) {cout << "Выход.\n";break;}
+        else {cout << "Неверный выбор!\n";}
+    }
+    return 0;
+}
